@@ -9,7 +9,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-20-green?logo=nodedotjs)](https://nodejs.org/)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 
-[Features](#-features) · [Architecture](#-architecture) · [Tech Stack](#-tech-stack) · [Getting Started](#-getting-started) · [API Reference](#-api-reference) · [WebSocket Events](#-websocket-events) · [Deployment](#-deployment)
+[Features](#features) · [Architecture](#architecture) · [Tech Stack](#tech-stack) · [Getting Started](#getting-started) · [API Reference](#api-reference) · [WebSocket Events](#websocket-events) · [Deployment](#deployment)
 
 </div>
 
@@ -21,24 +21,24 @@ LetsMeet is a **Zoom-like video conferencing backend** built with Node.js, TypeS
 
 ---
 
-## ✨ Features
+## Features
 
-- 🎥 **Multi-party video & audio** via mediasoup SFU — scales to 50+ participants per room without peer-to-peer mesh overhead
-- 🖥️ **Screen sharing** — first-class support via tagged media producers
-- 💬 **In-meeting chat** — real-time Socket.IO broadcast + persisted PostgreSQL history with cursor-based pagination
-- 🔐 **JWT auth with refresh token rotation** — short-lived access tokens (15m), long-lived refresh tokens (7d), Redis blacklisting on revocation
-- 🛡️ **Rate limiting** — Redis-backed, per-route tiers (10 req/min auth, 100 req/min general)
-- 📋 **RFC 7807 error responses** — consistent, machine-readable error format across all endpoints
-- 🔍 **Structured logging** — pino JSON logs in production, pretty-print in development, with correlation IDs per request
-- 🏥 **Health check endpoint** — reports live status of PostgreSQL and Redis
-- 🚀 **Graceful shutdown** — drains HTTP connections, closes Redis and mediasoup workers cleanly on SIGTERM/SIGINT
-- 🐳 **Docker-ready** — multi-stage Dockerfile + docker-compose for local dev
-- ☁️ **Render-ready** — `render.yaml` Blueprint for one-click cloud deploy
-- ✅ **39 unit tests** — covering utilities, error classes, validation schemas
+- **Multi-party video & audio** via mediasoup SFU — scales to 50+ participants per room without peer-to-peer mesh overhead
+- **Screen sharing** — first-class support via tagged media producers
+- **In-meeting chat** — real-time Socket.IO broadcast + persisted PostgreSQL history with cursor-based pagination
+- **JWT auth with refresh token rotation** — short-lived access tokens (15m), long-lived refresh tokens (7d), Redis blacklisting on revocation
+- **Rate limiting** — Redis-backed, per-route tiers (10 req/min auth, 100 req/min general)
+- **RFC 7807 error responses** — consistent, machine-readable error format across all endpoints
+- **Structured logging** — pino JSON logs in production, pretty-print in development, with correlation IDs per request
+- **Health check endpoint** — reports live status of PostgreSQL and Redis
+- **Graceful shutdown** — drains HTTP connections, closes Redis and mediasoup workers cleanly on SIGTERM/SIGINT
+- **Docker-ready** — multi-stage Dockerfile + docker-compose for local dev
+- **Render-ready** — `render.yaml` Blueprint for one-click cloud deploy
+- **39 unit tests** — covering utilities, error classes, validation schemas
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 LetsMeet follows a **Modular Monolith** pattern — a single deployable unit with strict internal module boundaries, making it straightforward to reason about locally and extract into microservices later if needed.
 
@@ -92,7 +92,7 @@ Request → Correlation ID → Rate Limiter → JWT Auth → Zod Validation → 
 
 ---
 
-## 🔧 Tech Stack
+## Tech Stack
 
 | Layer | Technology | Rationale |
 |-------|-----------|-----------|
@@ -114,7 +114,7 @@ Request → Correlation ID → Rate Limiter → JWT Auth → Zod Validation → 
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -163,7 +163,7 @@ MEDIASOUP_MIN_PORT=10000
 MEDIASOUP_MAX_PORT=10100
 ```
 
-> ⚠️ **Note:** Avoid `$` characters in JWT secrets — shells may interpolate them. Use alphanumeric + `!@#%^&*` etc.
+> **Note:** Avoid `$` characters in JWT secrets — shells may interpolate them. Use alphanumeric + `!@#%^&*` etc.
 
 ### 3. Start Local Services
 
@@ -198,7 +198,7 @@ npm run dev
 
 ---
 
-## 📜 npm Scripts
+## npm Scripts
 
 | Script | Description |
 |--------|-------------|
@@ -216,7 +216,7 @@ npm run dev
 
 ---
 
-## 📡 API Reference
+## API Reference
 
 Base URL: `http://localhost:3000/api/v1`
 
@@ -236,7 +236,7 @@ Protected routes require: `Authorization: Bearer <accessToken>`
 
 ---
 
-### 🔐 Auth
+### Auth
 
 #### `POST /auth/register`
 Create a new account.
@@ -302,7 +302,7 @@ Rotate refresh token. The submitted token is immediately invalidated.
 
 ---
 
-#### `POST /auth/logout` 🔒
+#### `POST /auth/logout`
 Revoke the refresh token.
 
 **Request body:**
@@ -314,9 +314,9 @@ Revoke the refresh token.
 
 ---
 
-### 👤 Users
+### Users
 
-#### `GET /users/me` 🔒
+#### `GET /users/me`
 Get current user profile.
 
 **Response `200`:**
@@ -334,7 +334,7 @@ Get current user profile.
 
 ---
 
-#### `PATCH /users/me` 🔒
+#### `PATCH /users/me`
 Update profile fields.
 
 **Request body** (all optional):
@@ -349,9 +349,9 @@ Update profile fields.
 
 ---
 
-### 📅 Meetings
+### Meetings
 
-#### `POST /meetings` 🔒
+#### `POST /meetings`
 Create a new meeting.
 
 **Request body** (all optional):
@@ -388,7 +388,7 @@ The `code` is a unique human-readable join code (format: `xxx-xxxx-xxx`).
 
 ---
 
-#### `GET /meetings` 🔒
+#### `GET /meetings`
 List your meetings. Supports filtering and pagination.
 
 **Query parameters:**
@@ -414,7 +414,7 @@ List your meetings. Supports filtering and pagination.
 
 ---
 
-#### `GET /meetings/:id` 🔒
+#### `GET /meetings/:id`
 Get a specific meeting with its participants.
 
 **Response `200`:**
@@ -437,14 +437,14 @@ Get a specific meeting with its participants.
 
 ---
 
-#### `GET /meetings/join/:code` 🔒
+#### `GET /meetings/join/:code`
 Look up a meeting by its join code.
 
 **Response `200`:** Meeting object.
 
 ---
 
-#### `POST /meetings/:id/join` 🔒
+#### `POST /meetings/:id/join`
 Join a meeting. Returns a one-time `socketToken` (valid 60s) for WebSocket authentication.
 
 **Response `200`:**
@@ -465,23 +465,23 @@ Join a meeting. Returns a one-time `socketToken` (valid 60s) for WebSocket authe
 
 ---
 
-#### `POST /meetings/:id/leave` 🔒
+#### `POST /meetings/:id/leave`
 Leave a meeting. Sets `leftAt` timestamp on participant record.
 
 **Response `204`:** No content.
 
 ---
 
-#### `POST /meetings/:id/end` 🔒 *(host only)*
+#### `POST /meetings/:id/end` *(host only)*
 End a meeting for all participants. Sets status to `ended`, marks all active participants as left, and cleans up Redis state.
 
 **Response `204`:** No content.
 
 ---
 
-### 💬 Chat History
+### Chat History
 
-#### `GET /meetings/:id/chat` 🔒
+#### `GET /meetings/:id/chat`
 Retrieve paginated chat message history (cursor-based, latest first).
 
 **Query parameters:**
@@ -511,7 +511,7 @@ Retrieve paginated chat message history (cursor-based, latest first).
 
 ---
 
-### 🏥 Health
+### Health
 
 #### `GET /health`
 Returns live status of all dependent services. Used for Render health checks.
@@ -535,7 +535,7 @@ Lightweight probe — returns `200` if healthy, `503` if degraded. No response b
 
 ---
 
-## 🔌 WebSocket Events
+## WebSocket Events
 
 Connect after calling `POST /meetings/:id/join` to obtain a `socketToken`.
 
@@ -613,7 +613,7 @@ The `media:new-producer` event is emitted to the room with `appData: { type: 'sc
 
 ---
 
-## 🗄️ Database Schema
+## Database Schema
 
 ```
 users
@@ -638,7 +638,7 @@ refresh_tokens
 
 ---
 
-## 🔑 Security
+## Security
 
 | Concern | Implementation |
 |---------|---------------|
@@ -655,7 +655,7 @@ refresh_tokens
 
 ---
 
-## ☁️ Deployment
+## Deployment
 
 ### Render (Recommended)
 
@@ -678,7 +678,7 @@ refresh_tokens
 npm run db:migrate
 ```
 
-> ⚠️ **mediasoup on Render Starter (512 MB):** Works for demos with up to ~5 concurrent participants. Upgrade to Standard ($25/mo) for heavier load.
+> **Note:** mediasoup on Render Starter (512 MB) Works for demos with up to ~5 concurrent participants. Upgrade to Standard ($25/mo) for heavier load.
 
 ### Docker (Self-hosted)
 
@@ -707,7 +707,7 @@ docker run -p 3000:3000 \
 
 ---
 
-## ✅ Testing
+## Testing
 
 ```bash
 npm test                # Run all unit tests
@@ -729,7 +729,7 @@ npm run test:coverage   # Generate coverage report
 
 ---
 
-## 🛣️ Roadmap
+## Roadmap
 
 - [ ] Frontend client (React + mediasoup-client)
 - [ ] Waiting room / host approval flow
@@ -741,6 +741,6 @@ npm run test:coverage   # Generate coverage report
 
 ---
 
-## 📄 License
+## License
 
 ISC © [Mudit Garg](https://github.com/MuditGarg007)
