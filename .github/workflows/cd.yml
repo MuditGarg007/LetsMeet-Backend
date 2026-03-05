@@ -1,0 +1,23 @@
+name: CD — Deploy to Render
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: []            # runs independently; CI is a separate workflow
+
+    environment:
+      name: production
+      url: ${{ vars.RENDER_SERVICE_URL }}
+
+    steps:
+      - name: Trigger Render deploy
+        run: |
+          curl --silent --show-error --fail -X POST \
+            "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" \
+            | jq .
