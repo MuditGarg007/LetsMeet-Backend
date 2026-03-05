@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: letsmeet-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: CLIENT_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: MEDIASOUP_LISTEN_IP
+        value: 0.0.0.0
+      - key: MEDIASOUP_ANNOUNCED_IP
+        sync: false
+    healthCheckPath: /api/v1/health
